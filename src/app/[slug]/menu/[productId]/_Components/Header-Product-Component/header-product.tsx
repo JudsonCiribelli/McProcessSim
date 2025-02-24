@@ -16,25 +16,25 @@ const HeaderProduct = ({product}: ProductHeaderProps) => {
     return Router.back()
   }
   return ( 
-    <div className="relative h-[300px] w-full">
-       <Button
-       onClick={handleBackClick}
-        variant="secondary"
-        size="icon"
-        className="absolute left-4 top-4 z-50 rounded-full">
-        <ChevronLeftIcon />
+      <div className="relative min-h-[300px] w-full">
+        <Button
+         onClick={handleBackClick}
+         variant="secondary"
+         size="icon"
+         className="absolute left-4 top-4 z-50 rounded-full">
+         <ChevronLeftIcon />
         </Button>
       
-      <Image src={product.imageUrl} alt={product.name} fill className="object-contain"/>
+       <Image src={product.imageUrl} alt={product.name} fill className="object-contain"/>
       
-      <Button
-        variant="secondary"
-        size="icon"
-        className="absolute right-4 top-4 z-50 rounded-full"
-      >
-        <ScrollTextIcon />
-      </Button>
-     </div>
+        <Button
+         variant="secondary"
+         size="icon"
+         className="absolute right-4 top-4 z-50 rounded-full"
+         >
+         <ScrollTextIcon />
+        </Button>
+      </div>
    );
 }
  

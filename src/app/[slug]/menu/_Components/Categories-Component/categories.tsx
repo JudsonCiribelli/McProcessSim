@@ -38,7 +38,7 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
             height={45}
           />
           <div>
-            <h2 className="text-lg font-semibold">{restaurant.name}</h2>
+            <h2 className="text-lg font-semibold">Mc Donald's</h2>
             <p className="text-xs opacity-55">{restaurant.description}</p>
           </div>
         </div>

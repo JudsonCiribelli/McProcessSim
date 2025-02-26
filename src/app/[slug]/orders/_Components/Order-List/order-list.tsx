@@ -1,3 +1,4 @@
+
 import { OrderStatus, Prisma } from "@prisma/client";
 import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
 import Image from "next/image";
@@ -35,7 +36,7 @@ const OrderList = ({orders}: OrderListProps) => {
   
   return ( 
     <div className="space-y-6 p-6">
-      <Button size="icon" variant="secondary" className="rounded-full">
+      <Button size="icon" variant="secondary" className="rounded-full" >
         <ChevronLeftIcon/>
       </Button>
       <div className="flex items-center gap-3">

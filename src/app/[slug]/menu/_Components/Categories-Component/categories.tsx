@@ -1,26 +1,38 @@
 "use client";
+
 import { Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { FormatCurrency } from "@/helpers/format-currency";
 
+import { CartContext } from "../../context/cart";
+import CartSheet from "../Card-Sheets-Component/card-Sheet";
 import Products from "../Products-List-Component/products";
+
 
 interface RestaurantCategoriesProps {
   restaurant: Prisma.RestaurantGetPayload<{
-    include: { menuCategories: { include: { products: true } } };
+    include: {
+      menuCategories: {
+        include: { products: true };
+      };
+    };
   }>;
 }
 
 type MenuCategoriesWithProducts = Prisma.MenuCategoryGetPayload<{
   include: { products: true };
 }>;
+
 const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] =
     useState<MenuCategoriesWithProducts>(restaurant.menuCategories[0]);
+  const { products, total, toggleCart, totalQuantity } =
+    useContext(CartContext);
   const handleCategoryClick = (category: MenuCategoriesWithProducts) => {
     setSelectedCategory(category);
   };
@@ -34,17 +46,17 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
           <Image
             src={restaurant.avatarImageUrl}
             alt={restaurant.name}
-            width={45}
             height={45}
+            width={45}
           />
           <div>
-            <h2 className="text-lg font-semibold">Mc Donald's</h2>
+            <h2 className="text-lg font-semibold">{restaurant.name}</h2>
             <p className="text-xs opacity-55">{restaurant.description}</p>
           </div>
         </div>
         <div className="mt-3 flex items-center gap-1 text-xs text-green-500">
           <ClockIcon size={12} />
-          <p>Aberto</p>
+          <p>Aberto!</p>
         </div>
       </div>
 
@@ -53,7 +65,7 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
           {restaurant.menuCategories.map((category) => (
             <Button
               onClick={() => handleCategoryClick(category)}
-              key={restaurant.id}
+              key={category.id}
               variant={getCategoryButtonVariant(category)}
               size="sm"
               className="rounded-full"
@@ -64,8 +76,24 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps) => {
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
-      <h3 className="px-4 py-5 font-semibold">{selectedCategory.name}</h3>
+
+      <h3 className="px-5 pt-2 font-semibold">{selectedCategory.name}</h3>
       <Products products={selectedCategory.products} />
+      {products.length > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 flex w-full items-center justify-between border-t bg-white px-5 py-3">
+          <div>
+            <p className="text-xs text-muted-foreground">Total dos pedidos</p>
+            <p className="text-sm font-semibold">
+              {FormatCurrency(total)}
+              <span className="text-xs font-normal text-muted-foreground">
+                / {totalQuantity} {totalQuantity > 1 ? "itens" : "item"}
+              </span>
+            </p>
+          </div>
+          <Button onClick={toggleCart}>Ver sacola</Button>
+          <CartSheet />
+        </div>
+      )}
     </div>
   );
 };

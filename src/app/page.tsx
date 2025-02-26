@@ -1,5 +1,7 @@
-const HomePage = () => {
-  return <h1>Home Page</h1>;
+import { redirect } from "next/navigation";
+
+const HomePage = async () => {
+  return redirect("/fsw-donalds");
 };
 
 export default HomePage;

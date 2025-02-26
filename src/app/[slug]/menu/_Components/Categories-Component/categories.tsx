@@ -13,7 +13,6 @@ import { CartContext } from "../../context/cart";
 import CartSheet from "../Card-Sheets-Component/card-Sheet";
 import Products from "../Products-List-Component/products";
 
-
 interface RestaurantCategoriesProps {
   restaurant: Prisma.RestaurantGetPayload<{
     include: {

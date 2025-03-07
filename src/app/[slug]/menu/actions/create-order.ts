@@ -2,8 +2,8 @@
 
 import { ConsumptionMethod } from "@prisma/client";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
+//import { redirect } from "next/navigation";
 import { db } from "@/lib/prisma";
 
 import { removeCpfPunctuation } from "../helpers/cpf";
@@ -19,10 +19,10 @@ interface createOrderInput {
   slug: string;
 }
 
-export const createOrder = async (Input: createOrderInput) => {
+export const createOrder = async (input: createOrderInput) => {
   const restaurant = await db.restaurant.findUnique({
     where: {
-      slug: Input.slug,
+      slug: input.slug,
     },
   });
   if (!restaurant) {
@@ -31,22 +31,22 @@ export const createOrder = async (Input: createOrderInput) => {
   const productsWithPrices = await db.product.findMany({
     where: {
       id: {
-        in: Input.products.map((product) => product.id),
+        in: input.products.map((product) => product.id),
       },
     },
   });
 
-  const productsWithPricesAndQuantity = Input.products.map((product) => ({
+  const productsWithPricesAndQuantity = input.products.map((product) => ({
     productId: product.id,
     quantity: product.quantity,
     price: productsWithPrices.find((p) => p.id === product.id)!.price,
   }));
 
-  await db.order.create({
+  const order = await db.order.create({
     data: {
       status: "PENDING",
-      customerName: Input.customerName,
-      customerCPF: removeCpfPunctuation(Input.customerCPF),
+      customerName: input.customerName,
+      customerCPF: removeCpfPunctuation(input.customerCPF),
       orderProducts: {
         createMany: {
           data: productsWithPricesAndQuantity,
@@ -56,12 +56,13 @@ export const createOrder = async (Input: createOrderInput) => {
         (acc, product) => acc + product.price * product.quantity,
         0,
       ),
-      consumptionMethod: Input.consumptionMethod,
+      consumptionMethod: input.consumptionMethod,
       restaurantId: restaurant.id,
     },
   });
-  revalidatePath(`/${Input.slug}/orders`);
-  redirect(
-    `/${Input.slug}/orders?cpf=${removeCpfPunctuation(Input.customerCPF)}`,
-  );
+  revalidatePath(`/${input.slug}/orders`);
+  // redirect(
+  //   `/${input.slug}/orders?cpf=${removeCpfPunctuation(input.customerCPF)}`,
+  // );
+  return order;
 };

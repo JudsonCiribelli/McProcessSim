@@ -24,7 +24,7 @@ interface OrderListProps {
   >;
 }
 
-const getStatusLabel = async (status: OrderStatus) => {
+const getStatusLabel = (status: OrderStatus) => {
   if (status === "FINISHED") return "Finalizado";
   if (status === "IN_PREPARATION") return "Em preparo";
   if (status === "PENDING") return "Pendente";

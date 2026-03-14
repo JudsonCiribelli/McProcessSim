@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍔 McProcessim - Autoatendimento Digital
 
-## Getting Started
+![Next Js](https://img.shields.io/badge/NextJs-000000?style=flat&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![postgresql](https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-039BE5?style=for-the-badge&logo=stripe&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-3068B7?style=for-the-badge&logo=zod&logoColor=white)
 
-First, run the development server:
+> Autoatendimento Digital: Uma réplica funcional de um totem de autoatendimento, focada em UX fluida e processos de pagamento seguros.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Sobre o Projeto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+O McProcessim é uma aplicação Full-stack que simula a experiência completa de um terminal de autoatendimento. Desde a escolha do tipo de consumo (local ou viagem) até a personalização detalhada do pedido e checkout final.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O foco principal deste projeto foi a integridade dos dados e a experiência do usuário, garantindo que informações sensíveis como CPF sejam validadas corretamente antes de qualquer transação financeira.
 
-## Learn More
+### 🛡️ Destaques Técnicos
 
-To learn more about Next.js, take a look at the following resources:
+- **Validação de Dados com Zod**
+  Implementei uma camada de segurança no checkout que valida o CPF e o nome do cliente. Isso evita que requisições malformadas cheguem à API de pagamentos, melhorando a confiabilidade do sistema.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Server-Side Logic**
+  Utilizei Server Actions do Next.js para lidar com a criação das sessões de checkout do Stripe, mantendo as chaves secretas protegidas no servidor e garantindo uma comunicação segura entre o backend e o gateway.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🛡️ Segurança e Integridade de Dados
 
-## Deploy on Vercel
+- **Checkout com Validação:** Coleta de nome e CPF do usuário validada via Zod para garantir dados consistentes antes do redirecionamento ao Stripe.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📊 Arquitetura e Estado Global
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Context API:** Centralização da lógica de autenticação e dados de anúncios, evitando o prop drilling e melhorando a manutenção do código.
+- **Custom Hooks:** Abstração de lógicas complexas para componentes reutilizáveis e código mais limpo.
+
+### 🎨 UI/UX Responsiva (Mobile-First)
+
+- Interface construída com Tailwind CSS, garantindo que a experiência de compra seja idêntica e fluida tanto em dispositivos móveis quanto em desktops.
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+- **[NextJs](https://nextjs.org/)**
+- **[TypeScript](https://www.typescriptlang.org/)** - Tipagem estática.
+- **[Postgresql](https://www.postgresql.org/docs/)** - Database.
+- **[Stripe](https://docs.stripe.com/)** - Gateway de pagamento.
+- **[Tailwind](https://tailwindcss.com/)** - Estilização.
+- **[Zod](https://zod.dev/)** - Validação de Schemas.
+
+---
+
+## 🚀 Como Executar
+
+### Pré-requisitos
+
+- Node.js instalado (v18 ou superior).
+- Uma conta no Firebase para configuração das chaves de API.
+
+### Passo a passo
+
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/JudsonCiribelli/mcprocessim.git
+   ```
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+3. **Configure as variáveis de ambiente:**
+   **Crie um arquivo .env.local na raiz e adicione suas credenciais do Stripe**
+   ```Snippet de código
+   NEXT_PUBLIC_STRIPE_PUBLIC_KEY=...
+   STRIPE_SECRET_KEY=...
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
+4. **Rode o projeto em modo de desenvolvimento**
+   ```bash
+   npm run dev
+   ```
+
+- Desenvolvido por Judson Rodrigues Ciribelli Filho 🚀
+
+---

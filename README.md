@@ -56,7 +56,6 @@ O foco principal deste projeto foi a integridade dos dados e a experiência do u
 ### Pré-requisitos
 
 - Node.js instalado (v18 ou superior).
-- Uma conta no Firebase para configuração das chaves de API.
 
 ### Passo a passo
 

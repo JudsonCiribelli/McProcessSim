@@ -32,6 +32,7 @@ export async function POST(request: Request) {
           received: true,
         });
       }
+
       const order = await db.order.update({
         where: {
           id: Number(orderId),
